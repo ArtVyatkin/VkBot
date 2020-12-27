@@ -1,0 +1,18 @@
+{
+  "db": {
+    "dbname": "vk_bot",
+    "user": "postgres",
+    "password": "24682468",
+    "host": "localhost",
+    "tables": {
+      "users": "users"
+    }
+  },
+  "vk_bot": {
+    "token": "b62bf037e2dd4a22310c716f3291617521abc70a5f3da45b426b3d3ac662b1231e76956fd904ecb97127a"
+  },
+  "months": {
+    "января": "Jan", "февраля": "Feb", "марта": "Mar", "апреля": "Apr", "мая": "May", "июня": "Jun",
+    "июля": "Jul", "августа": "Aug", "сентября": "Sep", "октября": "Oct", "ноября": "Nov", "декабря": "Dec"
+  }
+}
