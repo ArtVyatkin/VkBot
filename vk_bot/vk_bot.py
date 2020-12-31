@@ -2,7 +2,6 @@ import json
 import random
 import vk_api
 import requests
-import logging
 from ast import literal_eval
 from vk_api.longpoll import VkLongPoll, VkEventType
 from vk_api import VkUpload
@@ -14,14 +13,14 @@ from .vk_bot_states import VkStateTypes, get_state_switcher
 
 class VkBot:
     def __init__(self):
-        with open('vk_bot/config.json') as config_file:
+        with open('config.json') as config_file:
             vk_bot_config = json.loads(config_file.read())['vk_bot']
         self.state = None
         self.session = requests.Session()
-        self.vk_session = vk_api.VkApi(token=vk_bot_config['token'])
-        self.longpoll = VkLongPoll(self.vk_session)
-        self.vk = self.vk_session.get_api()
-        self.upload = VkUpload(self.vk_session)
+        vk_session = vk_api.VkApi(token=vk_bot_config['token'])
+        self.longpoll = VkLongPoll(vk_session)
+        self.vk = vk_session.get_api()
+        self.upload = VkUpload(vk_session)
         self.db = Database()
         self.news_sender = NewsSender(self, 50)
         self.image_handler = ImageHandler(self)
@@ -35,7 +34,7 @@ class VkBot:
         self.news_sender.send_news(user_id, news)
 
     def has_user_subscription(self, user_id):
-        return len(self.db.get_subscribed_universities(user_id)) != 0
+        return len(self.db.get_user(user_id).universities) != 0
 
     def set_state_to_db(self, user_id, state_id, state_payload=None):
         if state_payload is not None:
@@ -50,7 +49,7 @@ class VkBot:
         self.state = self.state_switcher[state_id]
 
     def get_state_payload(self, user_id):
-        return literal_eval(self.db.get_user_state_payload(user_id))
+        return literal_eval(self.db.get_user(user_id).state_payload)
 
     def set_state_payload(self, user_id, state_payload):
         return self.db.set_user_state_payload(user_id, str(state_payload))
@@ -67,7 +66,6 @@ class VkBot:
         )
 
     def run(self):
-        logging.info('run vk bot')
         for event in self.longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me and event.text:
                 user_id = event.user_id
@@ -75,7 +73,7 @@ class VkBot:
                     self.db.add_user(user_id, VkStateTypes.INITIAL.value)
                     self.set_state_to_vk_bot(VkStateTypes.INITIAL.value)
                 else:
-                    current_state = self.db.get_user_state(user_id)
+                    current_state = self.db.get_user(user_id).state
                     self.set_state_to_vk_bot(current_state)
                 self.state.handle_event(event)
                 self.state.send(event.user_id)

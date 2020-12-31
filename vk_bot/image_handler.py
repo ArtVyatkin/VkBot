@@ -3,9 +3,10 @@ from math import floor
 from PIL import Image
 
 
+# Vkontakte requires that the image for the "carousel" template be at least 221x136 in size
 def resize_image(image):
     width, height = image.size
-    if width < 210 or height < 140:
+    if width < 240 or height < 150:
         ratio = height / width
         width = width * 1.2
         height = ratio * width
@@ -16,6 +17,7 @@ def resize_image(image):
         return image
 
 
+# Vkontakte requires the image for the "carousel" template to be exactly 13/8
 def crop_image(image):
     width, height = image.size
     image = resize_image(image)

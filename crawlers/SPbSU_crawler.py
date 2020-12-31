@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 from config import months_dict
-from crawler import Crawler
+from .crawler import Crawler
 
 
 class SPbSUCrawler(Crawler):
@@ -23,26 +23,29 @@ class SPbSUCrawler(Crawler):
             }
         )  # to locate it definitely
         for news_card in table.find_all("div", class_="card-context--large"):
-            string_date = news_card.find("span", {"class": "card__date"}).text.lower()
-            for russian, english in months_dict.items():
-                string_date = string_date.replace(russian, english)
-            date = datetime.strptime(string_date, "%d %b %Y")
-            if date > self.start_date:
-                title = news_card.find("h4", {"class": "card__title"}).text
-                # for keyword in self.keywords:
-                #     if keyword in title:
-                # photo_link = news_card.find("div", {"class": "card__img"}).get("style")[23:-2]
-                link = "www.spbu.ru" + news_card.find("a", {"class": "card__header"}).get("href")
+            try:
+                string_date = news_card.find("span", {"class": "card__date"}).text.lower()
+                for russian, english in months_dict.items():
+                    string_date = string_date.replace(russian, english)
+                date = datetime.strptime(string_date, "%d %b %Y")
+                if date > self.start_date:
+                    title = news_card.find("h4", {"class": "card__title"}).text
+                    # for keyword in self.keywords:
+                    #     if keyword in title:
+                    # photo_link = news_card.find("div", {"class": "card__img"}).get("style")[23:-2]
+                    link = "https://www.spbu.ru" + news_card.find("a", {"class": "card__header"}).get("href")
 
-                self.browser.get("https://" + link)
-                page_root_2 = BeautifulSoup(self.browser.page_source, "lxml")
-                poster = page_root_2.find("div", {"class": "event-poster"})
-                if poster is None:
-                    photo_link = news_card.find("div", {"class": "card__img"}).get("style")[23:-2]
-                else:
-                    photo_link = poster.find("img").get("src")
-                self.data.loc[0 if pd.isnull(self.data.index.max()) else self.data.index.max() + 1] = \
-                    ["SPbSU", title, link, string_date, photo_link]  # append
+                    self.browser.get(link)
+                    page_root_2 = BeautifulSoup(self.browser.page_source, "lxml")
+                    poster = page_root_2.find("div", {"class": "event-poster"})
+                    if poster is None:
+                        photo_link = news_card.find("div", {"class": "card__img"}).get("style")[23:-2]
+                    else:
+                        photo_link = poster.find("img").get("src")
+                    self.data.loc[0 if pd.isnull(self.data.index.max()) else self.data.index.max() + 1] = \
+                        ["SPbSU", title, link, string_date, photo_link]  # append
+            except BaseException:
+                print("!")
 
     def get_news(self):
         self.parse_page_in_table("")

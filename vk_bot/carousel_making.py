@@ -34,4 +34,3 @@ def get_carousel_from_news(news):
             make_carousel_element_data(current_news.title, str(current_news.date), current_news.link,
                                        current_news.photo_id))
     return make_carousel(elements)
-

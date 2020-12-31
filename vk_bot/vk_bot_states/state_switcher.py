@@ -1,7 +1,7 @@
 from .initial_state import InitialState
 from .waiting_state import WaitingState
 from .simple_selection_state import SimpleSelectionState
-from .event_handlers import *
+from .event_handler import *
 from .state_settings_for_ui import state_settings_for_ui
 
 
@@ -62,5 +62,4 @@ def get_state_switcher(vk_bot):
         VkStateTypes.UNSUBSCRIPTION.value:
             SimpleSelectionState(vk_bot, eventHandler.handle_university_selection_when_unsubscribe,
                                  **state_settings_for_ui["selection_of_university_for_unsubscription"]),
-
     }

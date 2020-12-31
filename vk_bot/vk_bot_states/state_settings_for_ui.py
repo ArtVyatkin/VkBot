@@ -1,5 +1,6 @@
 from vk_api.keyboard import VkKeyboardColor
 
+from crawlers import available_universities
 from vk_bot.phrases import phrases
 
 topics_settings = [
@@ -13,8 +14,6 @@ topics_settings = [
     phrases["miscellanea"],
     phrases["any_topic"],
 ]
-
-available_universities = ["СПбГУ", "ИТМО", "Политех"]
 
 days_of_week = [
     "Понедельник",

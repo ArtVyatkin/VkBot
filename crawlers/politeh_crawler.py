@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 from config import months_dict
-from crawler import Crawler
+from .crawler import Crawler
 
 
 class PolitehCrawler(Crawler):
@@ -59,7 +59,7 @@ class PolitehCrawler(Crawler):
                 if link[0] != 'h':
                     link = "https://www.spbstu.ru" + link
                 self.data.loc[0 if pd.isnull(self.data.index.max()) else self.data.index.max() + 1] = \
-                    ["SPbSTU", title, link, date.strftime("%d-%b-%Y"), photo_link, theme]  # append
+                    ["SPbSTU", title, link, date.strftime("%d %b %Y"), photo_link, theme]  # append
 
     def get_news(self):
         for section in self.sections:

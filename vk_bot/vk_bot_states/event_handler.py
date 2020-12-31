@@ -10,7 +10,7 @@ class EventHandler:
         self.vk_bot = vk_bot
 
     def handle_topic_adding(self, event):
-        topics = self.vk_bot.db.get_topics(event.user_id)
+        topics = self.vk_bot.db.get_user(event.user_id).topics
         if event.text == phrases["any_topic"]:
             topics = []
             self.vk_bot.db.set_topics(event.user_id, topics)
@@ -33,7 +33,7 @@ class EventHandler:
             self.vk_bot.set_state(event.user_id, VkStateTypes.WAITING_STATE.value, {"isFirst": False})
 
     def get_handler_with_saving_payload(self, payload_property_name, next_state):
-        def handle_event(self, event):
+        def handle_event(event):
             payload = self.vk_bot.get_state_payload(event.user_id)
             payload.update({payload_property_name: event.text})
             self.vk_bot.set_state(event.user_id, next_state.value, payload)

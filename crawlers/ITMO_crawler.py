@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 from config import months_dict
-from crawler import Crawler
+from .crawler import Crawler
 
 
 class ITMOCrawler(Crawler):
@@ -45,7 +45,7 @@ class ITMOCrawler(Crawler):
             if date > self.start_date:
                 block = news_card.find("h4")
                 title = block.text
-                link = "www.news.itmo.ru" + block.find("a").get("href")
+                link = 'https://news.itmo.ru' + block.find("a").get("href")
                 photo_link = "https://news.itmo.ru/" + news_card.find("img").get("src")
                 self.data.loc[0 if pd.isnull(self.data.index.max()) else self.data.index.max() + 1] = \
                     ["ITMO", title, link, string_date, photo_link, theme]  # append
