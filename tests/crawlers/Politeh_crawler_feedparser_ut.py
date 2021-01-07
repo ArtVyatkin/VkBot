@@ -12,7 +12,7 @@ class PolitehCrawlerFeedparserUnitTests(unittest.TestCase):
 
     def test_one_record(self):
         crawler = PolitehCrawlerFeedparser(None, None)
-        with open("../resources/for_crawler_tests/one_record.json", "r", encoding="utf-8") as input_file:
+        with open("../resources/crawlers/one_record.json", "r", encoding="utf-8") as input_file:
             records = json.loads(input_file.read())
         data = crawler.get_news(records)
         title = "Александра ФИЛАРЕТОВА: «Ничего не бояться, идти к цели, гореть любимым делом и просто раствориться в работе»"
@@ -27,7 +27,7 @@ class PolitehCrawlerFeedparserUnitTests(unittest.TestCase):
 
     def test_several_records(self):
         crawler = PolitehCrawlerFeedparser(None, None)
-        with open("../resources/for_crawler_tests/one_record.json", "r", encoding="utf-8") as input_file:
+        with open("../resources/crawlers/one_record.json", "r", encoding="utf-8") as input_file:
             records = json.loads(input_file.read())
         data = crawler.get_news(records)
         title = "Александра ФИЛАРЕТОВА: «Ничего не бояться, идти к цели, гореть любимым делом и просто раствориться в работе»"

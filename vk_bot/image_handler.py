@@ -8,7 +8,7 @@ def resize_image(image):
     width, height = image.size
     if width < 240 or height < 150:
         ratio = height / width
-        width = width * 1.2
+        width = width * max(240 / width, 150 / height)
         height = ratio * width
         width = int(width)
         height = int(height)
