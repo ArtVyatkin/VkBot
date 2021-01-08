@@ -1,0 +1,50 @@
+[
+  {
+    "date": "2020-01-02",
+    "university": "СПбГУ",
+    "title": "title1",
+    "theme": "Наука",
+    "link": "https://link1",
+    "photo_id": "-0_0"
+  },
+    {
+    "date": "2020-04-01",
+    "university": "СПбГУ",
+    "title": "title2",
+    "theme": "Наука",
+    "link": "https://link2",
+    "photo_id": "-0_0"
+  },
+    {
+    "date": "2020-05-01",
+    "university": "Политех",
+    "title": "title3",
+    "theme": "Достижения студентов",
+    "link": "https://link3",
+    "photo_id": "-0_0"
+  },
+    {
+    "date": "2020-11-17",
+    "university": "Политех",
+    "title": "title4",
+    "theme": "Образование",
+    "link": "https://link4",
+    "photo_id": "-0_0"
+  },
+    {
+    "date": "2019-06-03",
+    "university": "ИТМО",
+    "title": "title5",
+    "theme": "Образование",
+    "link": "https://link5",
+    "photo_id": "-0_0"
+  },
+    {
+    "date": "2020-09-02",
+    "university": "ИТМО",
+    "title": "title6",
+    "theme": "Наука",
+    "link": "https://link6",
+    "photo_id": "-0_0"
+  }
+]

@@ -108,7 +108,7 @@ class Database:
         with DbSession(self.Session, with_commit=True) as session:
             self.get_user(user_id, session).sending_time = sending_time
 
-    def set_user_state(self, user_id, state, state_payload):
+    def set_user_state(self, user_id, state, state_payload=None):
         with DbSession(self.Session, with_commit=True) as session:
             user = self.get_user(user_id, session)
             user.state = state
@@ -140,3 +140,11 @@ class Database:
                 filter(User.sending_time.in_(list_of_suitable_sending_dates)). \
                 filter(or_(User.last_sending_date.is_(None), User.last_sending_date < current_date)). \
                 filter(User.universities != [])
+
+    def delete_users(self, list_with_ids):
+        with DbSession(self.Session, with_commit=True) as session:
+            session.query(User).filter(User.vk_id.in_(list_with_ids)).delete(synchronize_session='fetch')
+
+    def delete_news(self, list_with_titles):
+        with DbSession(self.Session, with_commit=True) as session:
+            session.query(News).filter(News.title.in_(list_with_titles)).delete(synchronize_session='fetch')
