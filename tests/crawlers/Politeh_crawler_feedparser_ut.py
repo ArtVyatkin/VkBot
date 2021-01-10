@@ -1,7 +1,7 @@
 import unittest
 import pandas as pd
 import json
-from politeh_crawler_feedparser import PolitehCrawlerFeedparser
+from crawlers.politeh_crawler_feedparser import PolitehCrawlerFeedparser
 
 
 class PolitehCrawlerFeedparserUnitTests(unittest.TestCase):
